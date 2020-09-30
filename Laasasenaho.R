@@ -45,7 +45,6 @@ Laasasenaho_stemcurve_pine <- function(treed, treeh, step=0.1, saw=15, pulp=7,
   vwaste <- vstem_tot - (vsaw + vpulp)
   
   return( c(vstem_tot, vsaw, vpulp, vwaste) )
-  
 }
 
 Laasasenaho_stemcurve_spruce <- function(treed, treeh, step=0.1, saw=15, pulp=8,
@@ -95,7 +94,6 @@ Laasasenaho_stemcurve_spruce <- function(treed, treeh, step=0.1, saw=15, pulp=8,
   vwaste <- vstem_tot - (vsaw + vpulp)
   
   return( c(vstem_tot, vsaw, vpulp, vwaste) )
-  
 }
 
 Laasasenaho_stemcurve_birch <- function(treed, treeh, step=0.1, saw=15, pulp=8,
@@ -145,7 +143,6 @@ Laasasenaho_stemcurve_birch <- function(treed, treeh, step=0.1, saw=15, pulp=8,
   vwaste <- vstem_tot - (vsaw + vpulp)
   
   return( c(vstem_tot, vsaw, vpulp, vwaste) )
-  
 }
 
 treed <- 24
