@@ -15,7 +15,7 @@ Laasasenaho_stemcurve_pine <- function(treed, treeh, step=0.1, saw=15, pulp=7,
           )
   d20 <- treed/t13 # basic diameter at 20% heigth
   
-  h <- seq(step, treeh, step) # heigth vector
+  h <- seq(step, treeh, step) # heigth vector for different diameters
   x <- 1-(h/treeh)
   dl <- d20 * (
               c1*x
@@ -29,11 +29,15 @@ Laasasenaho_stemcurve_pine <- function(treed, treeh, step=0.1, saw=15, pulp=7,
               )
   
   # Generate dataframe for volume calculations
-  dl_shift <- c(dl[2:length(dl)], .0)
-  stemcurve <- data.frame(h=h, dl=dl, dl_shift=dl_shift)
+  dl_next <- c(dl[2:length(dl)], .0)
+  stemcurve <- data.frame(h=h, dl=dl, dl_next=dl_next)
   
   # Calculate overall volume
-  vstem <- with(stemcurve, pi * step *((dl/2/100)^2 + (dl/2/100) * (dl_shift/2/100) + (dl_shift/2/100)^2)/3)
+  vstem <- with(stemcurve, 1/3 * pi * step *  (
+                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
+                                              )
+                          
+                )
   vstem_tot <- sum(vstem)
 
   saw_proportion <- stemcurve$dl > saw
@@ -78,11 +82,15 @@ Laasasenaho_stemcurve_spruce <- function(treed, treeh, step=0.1, saw=15, pulp=8,
               )
   
   # Generate dataframe for volume calculations
-  dl_shift <- c(dl[2:length(dl)], .0)
-  stemcurve <- data.frame(h=h, dl=dl, dl_shift=dl_shift)
+  dl_next <- c(dl[2:length(dl)], .0)
+  stemcurve <- data.frame(h=h, dl=dl, dl_next=dl_next)
   
-  # Calculate overall volume
-  vstem <- with(stemcurve, pi * step *((dl/2/100)^2 + (dl/2/100) * (dl_shift/2/100) + (dl_shift/2/100)^2)/3)
+ # Calculate overall volume
+  vstem <- with(stemcurve, 1/3 * pi * step *  (
+                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
+                                              )
+                          
+                )
   vstem_tot <- sum(vstem)
 
   saw_proportion <- stemcurve$dl > saw
@@ -127,11 +135,15 @@ Laasasenaho_stemcurve_birch <- function(treed, treeh, step=0.1, saw=15, pulp=8,
               )
   
   # Generate dataframe for volume calculations
-  dl_shift <- c(dl[2:length(dl)], .0)
-  stemcurve <- data.frame(h=h, dl=dl, dl_shift=dl_shift)
+  dl_next <- c(dl[2:length(dl)], .0)
+  stemcurve <- data.frame(h=h, dl=dl, dl_next=dl_next)
   
-  # Calculate overall volume
-  vstem <- with(stemcurve, pi * step *((dl/2/100)^2 + (dl/2/100) * (dl_shift/2/100) + (dl_shift/2/100)^2)/3)
+ # Calculate overall volume
+  vstem <- with(stemcurve, 1/3 * pi * step *  (
+                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
+                                              )
+                          
+                )
   vstem_tot <- sum(vstem)
 
   saw_proportion <- stemcurve$dl > saw
