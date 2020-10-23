@@ -1,3 +1,24 @@
+calculate_volume <- function(stemcurve, step, saw, pulp)
+{
+   # Calculate overall volume
+  vstem <- with(stemcurve, 1/3 * pi * step *  (
+                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
+                                              )
+                          
+                )
+  vstem_tot <- sum(vstem)
+
+  saw_proportion <- stemcurve$dl > saw
+  pulp_proportion <- (stemcurve$dl < saw & stemcurve$dl > pulp)
+  waste_proportion <- stemcurve$dl < pulp
+  
+  vsaw <- sum(vstem[saw_proportion])
+  vpulp <- sum(vstem[pulp_proportion])
+  vwaste <- vstem_tot - (vsaw + vpulp)
+  
+  return( c(vstem_tot, vsaw, vpulp, vwaste) )
+}
+
 Laasasenaho_stemcurve_pine <- function(treed, treeh, step=0.1, saw=15, pulp=7, 
   c1=2.1288, c2=-0.63157, c3=-1.6082, c4=2.4886, c5=-2.4147, c6=2.3619, c7=-1.7539, c8=1.0817)
 {
@@ -31,24 +52,8 @@ Laasasenaho_stemcurve_pine <- function(treed, treeh, step=0.1, saw=15, pulp=7,
   # Generate dataframe for volume calculations
   dl_next <- c(dl[2:length(dl)], .0)
   stemcurve <- data.frame(h=h, dl=dl, dl_next=dl_next)
-  
-  # Calculate overall volume
-  vstem <- with(stemcurve, 1/3 * pi * step *  (
-                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
-                                              )
-                          
-                )
-  vstem_tot <- sum(vstem)
 
-  saw_proportion <- stemcurve$dl > saw
-  pulp_proportion <- (stemcurve$dl < saw & stemcurve$dl > pulp)
-  waste_proportion <- stemcurve$dl < pulp
-  
-  vsaw <- sum(vstem[saw_proportion])
-  vpulp <- sum(vstem[pulp_proportion])
-  vwaste <- vstem_tot - (vsaw + vpulp)
-  
-  return( c(vstem_tot, vsaw, vpulp, vwaste) )
+  return( calculate_volume(stemcurve, step, saw, pulp) )
 }
 
 Laasasenaho_stemcurve_spruce <- function(treed, treeh, step=0.1, saw=15, pulp=8,
@@ -85,23 +90,7 @@ Laasasenaho_stemcurve_spruce <- function(treed, treeh, step=0.1, saw=15, pulp=8,
   dl_next <- c(dl[2:length(dl)], .0)
   stemcurve <- data.frame(h=h, dl=dl, dl_next=dl_next)
   
- # Calculate overall volume
-  vstem <- with(stemcurve, 1/3 * pi * step *  (
-                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
-                                              )
-                          
-                )
-  vstem_tot <- sum(vstem)
-
-  saw_proportion <- stemcurve$dl > saw
-  pulp_proportion <- (stemcurve$dl < saw & stemcurve$dl > pulp)
-  waste_proportion <- stemcurve$dl < pulp
-  
-  vsaw <- sum(vstem[saw_proportion])
-  vpulp <- sum(vstem[pulp_proportion])
-  vwaste <- vstem_tot - (vsaw + vpulp)
-  
-  return( c(vstem_tot, vsaw, vpulp, vwaste) )
+  return( calculate_volume(stemcurve, step, saw, pulp) )
 }
 
 Laasasenaho_stemcurve_birch <- function(treed, treeh, step=0.1, saw=15, pulp=8,
@@ -138,23 +127,7 @@ Laasasenaho_stemcurve_birch <- function(treed, treeh, step=0.1, saw=15, pulp=8,
   dl_next <- c(dl[2:length(dl)], .0)
   stemcurve <- data.frame(h=h, dl=dl, dl_next=dl_next)
   
- # Calculate overall volume
-  vstem <- with(stemcurve, 1/3 * pi * step *  (
-                                              (dl/2/100)^2 + (dl/2/100) * (dl_next/2/100) + (dl_next/2/100)^2
-                                              )
-                          
-                )
-  vstem_tot <- sum(vstem)
-
-  saw_proportion <- stemcurve$dl > saw
-  pulp_proportion <- (stemcurve$dl < saw & stemcurve$dl > pulp)
-  waste_proportion <- stemcurve$dl < pulp
-  
-  vsaw <- sum(vstem[saw_proportion])
-  vpulp <- sum(vstem[pulp_proportion])
-  vwaste <- vstem_tot - (vsaw + vpulp)
-  
-  return( c(vstem_tot, vsaw, vpulp, vwaste) )
+  return( calculate_volume(stemcurve, step, saw, pulp) )
 }
 
 treed <- 24
@@ -171,5 +144,5 @@ c6=2.361900
 c7=-1.7539
 c8=1.081700
 Laasasenaho_stemcurve_pine(treed, treeh) # >> 0.431646396 0.364797984 0.062068874 0.004779538
-Laasasenaho_stemcurve_spruce(treed, treeh) # >> 0.443982098 0.376306778 0.062707912 0.004967409
-Laasasenaho_stemcurve_birch(treed, treeh) # >> 0.427840282 0.367908611 0.054863938 0.005067733
+Laasasenaho_stemcurve_spruce(treed, treeh) # >> 0.443982098 0.376306778 0.059670332 0.008004988
+Laasasenaho_stemcurve_birch(treed, treeh) # >> 0.427840282 0.367908611 0.052293887 0.007637784
