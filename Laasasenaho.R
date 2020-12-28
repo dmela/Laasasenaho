@@ -1,5 +1,5 @@
 calulate_wood_product_volumes <- function(step, saw_prop, pulp_prop) {
-  return( function(stemcurve) {    
+  return( function(stemcurve) {
 
     # Calculate overall volume of the stemcurve
     vstem <- with(stemcurve, 1/3 * pi * step *  (
