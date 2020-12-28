@@ -159,17 +159,7 @@ Laasasenaho_stemcurve_birch <- function(treed, treeh, step=0.1, saw=15, pulp=8,
 
 treed <- 24
 treeh <- 21
-step <- .1
-saw <- 15
-pulp <- 7
-c1=2.128800
-c2=-0.63157
-c3=-1.6082
-c4=2.488600
-c5=-2.4147
-c6=2.361900
-c7=-1.7539
-c8=1.081700
 Laasasenaho_stemcurve_pine(treed, treeh) # >> 0.431646396 0.364797984 0.062068874 0.004779538
-Laasasenaho_stemcurve_spruce(treed, treeh) # >> 0.443982098 0.376306778 0.062707912 0.004967409
-Laasasenaho_stemcurve_birch(treed, treeh) # >> 0.427840282 0.367908611 0.054863938 0.005067733
+Laasasenaho_stemcurve_spruce(treed, treeh) #  >> 0.443982098 0.376306778 0.059670332 0.008004988
+Laasasenaho_stemcurve_birch(treed, treeh) # >> 0.427840282 0.367908611 0.052293887 0.007637784
+
